@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>POST API Tester</title>
+</head>
+<body>
+<h2>1. Test JSON POST (`/api/post`)</h2>
+<input type="text" id="nameInput" placeholder="Enter name (e.g., paras)" value="paras">
+<button onclick="sendJsonPost()">Send JSON</button>
+<pre id="jsonOutput">Response will appear here...</pre>
+
+<hr>
+
+<h2>2. Test Multipart Image Upload (`/api/upload-image`)</h2>
+<input type="file" id="imageInput" accept="image/*">
+<input type="text" id="watermarkInput" placeholder="Enter watermark text">
+<button onclick="sendImageUpload()">Upload & Watermark</button>
+
+<pre id="imageOutput">Response will appear here...</pre>
+
+<script>
+    // 1. JSON POST Request
+    async function sendJsonPost() {
+        const nameVal = document.getElementById('nameInput').value;
+        try {
+            let response = await fetch('/api/post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: nameVal })
+            });
+            let data = await response.text();
+            document.getElementById('jsonOutput').innerText = data;
+        } catch (error) {
+            document.getElementById('jsonOutput').innerText = 'Error: ' + error;
+        }
+    }
+
+// 2. Multipart File Upload Request with Watermark Text
+async function sendImageUpload() {
+    const fileInput = document.getElementById('imageInput');
+    const textInput = document.getElementById('watermarkInput'); // 1. Get the text input element
+
+    if (fileInput.files.length === 0) {
+        alert('Please select an image first!');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', fileInput.files[0]);
+    formData.append('text', textInput.value); // 2. Append the text string
+
+    try {
+        let response = await fetch('/api/upload-image', {
+            method: 'POST',
+            body: formData // Fetch automatically sets the correct 'multipart/form-data' headers
+        });
+
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.statusText}`);
+        }
+
+        // Read the response as a Blob (binary data) instead of text
+        let blob = await response.blob();
+
+        // Create an object URL from the blob and display it as an image
+        let imageUrl = URL.createObjectURL(blob);
+
+        document.getElementById('imageOutput').innerHTML = `<img src="${imageUrl}" width="200" alt="Uploaded Preview">`;
+    } catch (error) {
+        document.getElementById('imageOutput').innerText = 'Error: ' + error.message;
+    }
+}
+
+</script>
+</body>
+</html>

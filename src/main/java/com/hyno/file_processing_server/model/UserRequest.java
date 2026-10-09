@@ -1,4 +1,4 @@
-package com.hyno.file_processing_server;
+package com.hyno.file_processing_server.model;
 
 public class UserRequest {
     private String name;
