@@ -37,4 +37,6 @@ out/
 .vscode/
 
 ### Folder ###
-imageUpload/
+inputDirName/
+outputDirName/
+data/

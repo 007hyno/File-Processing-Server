@@ -8,6 +8,8 @@ import com.hyno.file_processing_server.repository.JobRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class JobWorker {
 private final JobQueue jobqueue;
@@ -39,7 +41,22 @@ private final ImageProcessingService imageProcessingService;
     }
 
     @PostConstruct
-    public void init(){
+    public void init() throws InterruptedException {
+        List<Job> queuedJobs = jobRepository.findByStatus(JobStatus.QUEUED);
+        List<Job> interruptedJobs = jobRepository.findByStatus(JobStatus.PROCESSING);
+
+        // Reset interrupted jobs so state transitions remain clean
+        for (Job job : interruptedJobs) {
+            job.setStatus(JobStatus.QUEUED);
+            jobRepository.save(job);
+        }
+
+        for (Job j : queuedJobs) {
+            jobqueue.addJob(j);
+        }
+        for (Job j : interruptedJobs) {
+            jobqueue.addJob(j);
+        }
         runWorker("worker-1");
         runWorker("worker-2");
     }
