@@ -171,7 +171,7 @@ Explore what happens when:
 
 Do not attempt to solve all these problems in the first version.
 
-## 7. Version Roadmap
+**## 7. Version Roadmap
 
 The roadmap is provisional. Adjust the order or scope when implementation reveals a better learning path.
 
@@ -188,7 +188,7 @@ The roadmap is provisional. Adjust the order or scope when implementation reveal
 * Return the result.
 * Understand the limitation of long-running HTTP requests.
 
-### V1.0 — Asynchronous Processing [NEXT]
+### V1.0 — Asynchronous Processing [COMPLTED]
 
 * Introduce a Job model.
 * Generate a unique job ID.
@@ -205,7 +205,7 @@ The roadmap is provisional. Adjust the order or scope when implementation reveal
 
 Do not add a database, RabbitMQ, Redis, or WebSocket in this phase.
 
-### V2.0 — Persistent Job State
+### V2.0 — Persistent Job State [COMPLETED]
 
 * Introduce a relational database.
 * Learn JPA and repository operations.
@@ -214,7 +214,7 @@ Do not add a database, RabbitMQ, Redis, or WebSocket in this phase.
 * Recover interrupted jobs after application restart.
 * Understand the difference between persistent job records and an in-memory work queue.
 
-### V3.0 — Concurrency and Atomic Job Claiming
+### V3.0 — Concurrency and Atomic Job Claiming [NEXT]
 
 * Reproduce the duplicate-processing problem.
 * Understand race conditions.
@@ -309,7 +309,7 @@ Do not add a database, RabbitMQ, Redis, or WebSocket in this phase.
 * Duplicate-message handling
 * Distributed coordination
 * Eventual consistency
-* Crash recovery and fault tolerance
+* Crash recovery and fault tolerance**
 
 This advanced phase is optional and should be scoped according to learning goals and available time.
 

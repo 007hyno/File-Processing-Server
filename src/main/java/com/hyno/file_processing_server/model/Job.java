@@ -52,6 +52,10 @@ public class Job {
                 return inputPath;
         }
 
+        public String getErrorMessage() {
+                return errorMessage;
+        }
+
         public void setStatus(JobStatus status) {
                 this.status = status;
         }
@@ -65,5 +69,9 @@ public class Job {
         }
         public LocalDateTime getCreatedAt() {
                 return createdAt;
+        }
+
+        public void setErrorMessage(String errorMessage) {
+                this.errorMessage = errorMessage;
         }
 }
