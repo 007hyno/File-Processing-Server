@@ -1,12 +1,11 @@
 package com.hyno.file_processing_server.worker;
 
+import com.hyno.file_processing_server.model.Job;
+import com.hyno.file_processing_server.model.JobStatus;
+import com.hyno.file_processing_server.repository.JobRepository;
 import com.hyno.file_processing_server.service.ImageProcessingService;
 import com.hyno.file_processing_server.service.JobClaimService;
 import com.hyno.file_processing_server.service.JobQueue;
-import com.hyno.file_processing_server.model.JobStatus;
-import com.hyno.file_processing_server.model.Job;
-import com.hyno.file_processing_server.repository.JobRepository;
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -99,7 +98,7 @@ private final JobClaimService jobClaimService;
 //        return jobRepository.save(job);
 //    }
 
-    @PostConstruct
+    //@PostConstruct
     public void init() throws InterruptedException {
         List<Job> queuedJobs = jobRepository.findByStatus(JobStatus.QUEUED);
         List<Job> interruptedJobs = jobRepository.findByStatus(JobStatus.PROCESSING);
